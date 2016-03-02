@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Router</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="ll2pSourceAddressLabelTextView">Source Address: </string>
+    <string name="ll2pSourceAddressTextView">Unknown</string>
+
+    <string name="ll2pDestinationAddressLabelTextView">Destination Address: </string>
+    <string name="ll2pDestinationAddressTextView">Unknown</string>
+
+    <string name="ll2pTypeLabelTextView">Type Field: </string>
+    <string name="ll2pTypeTextView">Unknown</string>
+
+    <string name="ll2pPayloadLabelTextView">Payload: </string>
+    <string name="ll2pPayloadTextView">Unknown</string>
+
+    <string name="ll2pCRCLabelTextView">CRC: </string>
+    <string name="ll2pCRCTextView">Unknown</string>
+
+    <string name="IPAddressMenuString">Show IP Address</string>
+
+    <string name="ll2pAddressLabelTextView">LL2P Address </string>
+    <string name="ipAddressLabelTextView">IP Address </string>
+
+    <string name="ll2pEchoRequestPayloadTextView">Echo Request Payload </string>
+</resources>

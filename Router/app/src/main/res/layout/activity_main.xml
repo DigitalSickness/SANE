@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="gg.gaylord.mitch.router.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        android:id="@+id/view">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+</android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/view"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Source Address"
+            android:id="@+id/ll2pSourceAddressLabelTextView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Destination Address"
+            android:id="@+id/ll2pDestinationAddressLabelTextView"
+            android:layout_below="@+id/ll2pSourceAddressLabelTextView"
+            android:layout_alignParentStart="true"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type"
+            android:id="@+id/ll2pTypeLabelTextView"
+            android:layout_below="@+id/ll2pDestinationAddressLabelTextView"
+            android:layout_alignParentStart="true"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payload"
+            android:id="@+id/ll2pPayloadLabelTextView"
+            android:layout_below="@+id/ll2pTypeLabelTextView"
+            android:layout_alignParentStart="true"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CRC"
+            android:id="@+id/ll2pCRCLabelTextView"
+            android:layout_below="@+id/ll2pPayloadLabelTextView"
+            android:layout_alignParentStart="true"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unknown"
+            android:id="@+id/ll2pSourceAddressTextView"
+            android:layout_above="@+id/ll2pDestinationAddressTextView"
+            android:layout_toEndOf="@+id/ll2pDestinationAddressLabelTextView"
+            android:layout_alignParentEnd="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unknown"
+            android:id="@+id/ll2pDestinationAddressTextView"
+            android:layout_above="@+id/ll2pTypeTextView"
+            android:layout_toEndOf="@+id/ll2pDestinationAddressLabelTextView"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unknown"
+            android:id="@+id/ll2pTypeTextView"
+            android:layout_above="@+id/ll2pPayloadTextView"
+            android:layout_toEndOf="@+id/ll2pDestinationAddressLabelTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unknown"
+            android:id="@+id/ll2pPayloadTextView"
+            android:layout_above="@+id/ll2pCRCTextView"
+            android:layout_alignStart="@+id/ll2pTypeTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unknown"
+            android:id="@+id/ll2pCRCTextView"
+            android:layout_alignTop="@+id/ll2pCRCLabelTextView"
+            android:layout_alignStart="@+id/ll2pPayloadTextView" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="420dp"
+        android:layout_height="350dp"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_toEndOf="@+id/relativeLayout"
+        android:background="#15d82c"
+        android:id="@+id/adjacencyTableLayout">
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:id="@+id/adjacencyTableListView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LL2P Address"
+            android:id="@+id/ll2pAddressLabelTextView"
+            android:layout_above="@+id/ipAddressEditText"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IP Address"
+            android:id="@+id/ipAddressLabelTextView"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll2pAddressEditText"
+            android:hint="FACADE"
+            android:layout_above="@+id/ipAddressEditText"
+            android:layout_toEndOf="@+id/ll2pAddressLabelTextView" />
+
+        <EditText
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ipAddressEditText"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/ll2pAddressLabelTextView"
+            android:hint="10.25.71.190" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/addAdjacencyButton"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/clearAdjacencyButton" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear"
+            android:id="@+id/clearAdjacencyButton"
+            android:layout_alignTop="@+id/addAdjacencyButton"
+            android:layout_alignParentEnd="true" />
+
+        <EditText
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll2pEchoRequestPayloadEditText"
+            android:layout_above="@+id/ll2pAddressEditText"
+            android:layout_toEndOf="@+id/ll2pEchoRequestPayloadTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Echo Request Payload"
+            android:id="@+id/ll2pEchoRequestPayloadTextView"
+            android:layout_alignBottom="@+id/ll2pEchoRequestPayloadEditText"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+
+</RelativeLayout>
