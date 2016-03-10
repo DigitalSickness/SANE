@@ -7,8 +7,8 @@ import gg.gaylord.mitch.support.Factory;
  */
 public class ARPDaemon {
 
-    ARPTable arpTable;
-    LL2Daemon ll2DaemonObject;
+    private ARPTable arpTable;
+    private LL2Daemon ll2DaemonObject;
 
     public ARPDaemon(){
 

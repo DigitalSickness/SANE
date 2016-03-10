@@ -208,4 +208,55 @@
             android:layout_alignParentStart="true" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/view"
+        android:layout_toEndOf="@+id/adjacencyTableLayout"
+        android:id="@+id/routingTableRelativeLayout"
+        android:background="#7fb5f7">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Routing Table"
+            android:id="@+id/routingTableTextViewLabel"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="#000000" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/routingTableListView"
+            android:layout_below="@+id/routingTableTextViewLabel"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="275dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/routingTableRelativeLayout"
+        android:layout_alignParentEnd="true"
+        android:background="#ff6666">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forwarding Table"
+            android:id="@+id/forwardingTableTextView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#000000" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forwardingTableListView"
+            android:layout_below="@+id/forwardingTableTextView"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+
 </RelativeLayout>

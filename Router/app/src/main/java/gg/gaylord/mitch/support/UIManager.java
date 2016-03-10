@@ -11,14 +11,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import gg.gaylord.mitch.network.AdjacencyTable;
 import gg.gaylord.mitch.network.AdjacencyTableEntry;
+import gg.gaylord.mitch.network.ForwardingTable;
 import gg.gaylord.mitch.network.LL1Daemon;
 import gg.gaylord.mitch.network.LL2Daemon;
 import gg.gaylord.mitch.network.LL2P;
+import gg.gaylord.mitch.network.NetworkDistancePair;
+import gg.gaylord.mitch.network.RouteTable;
+import gg.gaylord.mitch.network.RouteTableEntry;
 import gg.gaylord.mitch.router.R;
 
 /**
@@ -31,9 +36,17 @@ public class UIManager {
     Factory myFactory;
     LL1Daemon layer1Daemon;
     LL2Daemon layer2Daemon;
+    RouteTable routeTable;
+    ForwardingTable forwardingTable = new ForwardingTable();
+    NetworkDistancePair networkDistancePair;
+
     ArrayAdapter<AdjacencyTableEntry> adjacencyAdapter;
+    ArrayAdapter<RouteTableEntry> routeAdapter;
+    ArrayAdapter<RouteTableEntry> forwardingAdapter;
 
     List<AdjacencyTableEntry> adjacencyList;
+    List<RouteTableEntry> routeTableList;
+    List<RouteTableEntry> forwardingTableList;
 
     /* Screen Widgets */
     private TextView ll2pCRCTextView;
@@ -44,9 +57,14 @@ public class UIManager {
 
     private TextView ll2pLabelAddressTextView;
     private TextView ipAddressLabelTextView;
+
     private EditText ipAddressEditText;
     private EditText ll2pAddressEditText;
+
     private ListView adjacencyTableListView;
+    private ListView routeTableListView;
+    private ListView forwardingTableLiestView;
+
     private Button addAdjacencyButton;
     private Button clearAdjacencyButton;
 
@@ -68,7 +86,11 @@ public class UIManager {
         ipAddressLabelTextView = (TextView) parentActivity.findViewById(R.id.ipAddressLabelTextView);
         ipAddressEditText = (EditText) parentActivity.findViewById(R.id.ipAddressEditText);
         ll2pAddressEditText = (EditText) parentActivity.findViewById(R.id.ll2pAddressEditText);
+
         adjacencyTableListView = (ListView) parentActivity.findViewById(R.id.adjacencyTableListView);
+        routeTableListView = (ListView) parentActivity.findViewById(R.id.routingTableListView);
+        forwardingTableLiestView = (ListView) parentActivity.findViewById(R.id.forwardingTableListView);
+
         addAdjacencyButton = (Button) parentActivity.findViewById(R.id.addAdjacencyButton);
         clearAdjacencyButton = (Button) parentActivity.findViewById(R.id.clearAdjacencyButton);
 
@@ -81,17 +103,57 @@ public class UIManager {
         adjacencyTableListView.setOnItemLongClickListener(removeAdjacency);
     }
 
-    public void getOjbectReferences(Factory factory){
+    public void getObjectReferences(Factory factory){
         myFactory = factory;
         parentActivity = factory.getParentActivity();
         context = parentActivity.getBaseContext();
         layer1Daemon = factory.getLl1Daemon();
         layer2Daemon = factory.getLl2Daemon();
+        routeTable = factory.getRouteTable();
+        networkDistancePair = factory.getNetworkDistancePair();
 
         /* Creates all screen widgets */
         createWidgets();
 
         listToDisplay();
+
+        testRouteAndForwardTables();
+
+    }
+
+    private void testRouteAndForwardTables(){
+        NetworkDistancePair networkDistancePair1 = new NetworkDistancePair(01, 3);
+        routeTable.addEntry(03, networkDistancePair1, 1, 03);
+        forwardingTable.addFibEntry(new RouteTableEntry(03, networkDistancePair1, 1, 03));
+
+
+        NetworkDistancePair networkDistancePair2 = new NetworkDistancePair(02, 1);
+        routeTable.addEntry(03, networkDistancePair2, 1, 01);
+        forwardingTable.addFibEntry(new RouteTableEntry(03, networkDistancePair2, 1, 01));
+        forwardingTable.addRouteList((ArrayList<RouteTableEntry>) routeTable.getRouteList());
+
+        routeTableToDisplay();
+        forwardingTableToDisplay();
+
+        /*forwardingTable.removeEntry(networkDistancePair1.getNetworkNumber(), 03);
+        forwardingTable.removeEntry(networkDistancePair2.getNetworkNumber(), 03);
+        routeTable.removeEntry(networkDistancePair1.getNetworkNumber(), 03);
+        routeTable.removeEntry(networkDistancePair2.getNetworkNumber(), 03);*/
+
+        /*try {
+            Thread.sleep((long) 12000);
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }
+
+        routeTable.removeOldRoutes();
+        forwardingTable.removeOldRoutes();
+
+        try {
+            Thread.sleep((long) 500);
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }*/
     }
 
     private AdapterView.OnItemClickListener sendToLL2P = new AdapterView.OnItemClickListener(){
@@ -168,6 +230,25 @@ public class UIManager {
         }
     }
 
+    private void resetRouteTableListAdapter(){
+        routeTableList = routeTable.getRouteList();
+        routeAdapter.clear();
+        Iterator<RouteTableEntry> listIterator = routeTableList.iterator();
+        while(listIterator.hasNext()){
+            routeAdapter.add(listIterator.next());
+        }
+    }
+
+    private void resetForwardingListAdapter(){
+        forwardingTableList = forwardingTable.getForwardingList();
+        forwardingAdapter.clear();
+        Iterator<RouteTableEntry> listIterator = forwardingTableList.iterator();
+        while(listIterator.hasNext()){
+            forwardingAdapter.add(listIterator.next());
+        }
+    }
+
+
     public void raiseToast(String message,int length){
         Toast.makeText(context, message, length).show();
     }
@@ -190,7 +271,25 @@ public class UIManager {
         resetAdjacencyListAdapter();
     }
 
+    public void routeTableToDisplay(){
+        routeTableList = routeTable.getRouteList();
 
+        routeAdapter = new ArrayAdapter<RouteTableEntry>(parentActivity, android.R.layout.simple_list_item_1, routeTableList);
+
+        routeTableListView.setAdapter(routeAdapter);
+
+        resetRouteTableListAdapter();
+    }
+
+    public void forwardingTableToDisplay(){
+        forwardingTableList = forwardingTable.getForwardingList();
+
+        forwardingAdapter = new ArrayAdapter<RouteTableEntry>(parentActivity, android.R.layout.simple_list_item_1, forwardingTableList);
+
+        forwardingTableLiestView.setAdapter(forwardingAdapter);
+
+        resetForwardingListAdapter();
+    }
 
     public void updateLL2PDisplay(LL2P ll2pObject){
         ll2pCRCTextView.setText(ll2pObject.getCRCHexString());
@@ -199,4 +298,5 @@ public class UIManager {
         ll2pTypeTextView.setText(ll2pObject.getTypeHexString());
         ll2pSourceAddressTextView.setText(ll2pObject.getSrcAddressHexString());
     }
+
 }

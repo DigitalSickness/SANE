@@ -5,9 +5,13 @@ import android.app.Activity;
 import gg.gaylord.mitch.network.ARPDaemon;
 import gg.gaylord.mitch.network.ARPTable;
 import gg.gaylord.mitch.network.CRC16;
+import gg.gaylord.mitch.network.ForwardingTable;
 import gg.gaylord.mitch.network.LL1Daemon;
 import gg.gaylord.mitch.network.LL2Daemon;
 import gg.gaylord.mitch.network.LL2P;
+import gg.gaylord.mitch.network.NetworkDistancePair;
+import gg.gaylord.mitch.network.RouteTable;
+import gg.gaylord.mitch.network.RouteTableEntry;
 import gg.gaylord.mitch.network.Scheduler;
 
 /**
@@ -25,12 +29,17 @@ public class Factory {
     ARPTable arpTableObject;
     ARPDaemon arpDaemon;
     Scheduler scheduler;
+    NetworkDistancePair networkDistancePair;
+    RouteTable routeTable;
+    RouteTableEntry routeTableEntry;
 
     public Factory (Activity activity){
         parentActivity = activity;
         createAllObjects();
         getAllObjectReferences();
     }
+
+
 
     private void createAllObjects(){
         uiManager = new UIManager();
@@ -41,14 +50,19 @@ public class Factory {
         arpDaemon = new ARPDaemon();
         crcObject = new CRC16();
         arpTableObject = new ARPTable();
+        networkDistancePair = new NetworkDistancePair();
+        routeTable = new RouteTable();
+        routeTableEntry = new RouteTableEntry();
     }
 
     private void getAllObjectReferences(){
-        uiManager.getOjbectReferences(this);
+        uiManager.getObjectReferences(this);
         ll2pObject.getLL2PObjectReference(this);
         ll1Daemon.getObjectReferences(this);
         ll2Daemon.getObjectReferences(this);
         arpDaemon.getObjectReferences(this);
+        routeTableEntry.getObjectReferences(this);
+        routeTable.getObjectReferences(this);
     }
 
     public Activity getParentActivity(){
@@ -70,5 +84,11 @@ public class Factory {
     public ARPTable getArpTableObject() { return arpTableObject;}
 
     public ARPDaemon getArpDaemon() { return arpDaemon; }
+
+    public NetworkDistancePair getNetworkDistancePair() { return networkDistancePair; }
+
+    public RouteTableEntry getRouteTableEntry() { return routeTableEntry; }
+
+    public RouteTable getRouteTable() { return routeTable; }
 
 }

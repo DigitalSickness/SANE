@@ -4,6 +4,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import gg.gaylord.mitch.support.Factory;
+import gg.gaylord.mitch.support.UIManager;
 
 /**
  * Created by mitchell.gaylord on 3/1/2016.
@@ -23,6 +24,7 @@ public class Scheduler {
 
 
         threadPoolManager.scheduleAtFixedRate(arpTable, 10, 80, TimeUnit.SECONDS);
+
     }
 
 }
