@@ -21,6 +21,7 @@ import gg.gaylord.mitch.network.ForwardingTable;
 import gg.gaylord.mitch.network.LL1Daemon;
 import gg.gaylord.mitch.network.LL2Daemon;
 import gg.gaylord.mitch.network.LL2P;
+import gg.gaylord.mitch.network.LRPDaemon;
 import gg.gaylord.mitch.network.NetworkDistancePair;
 import gg.gaylord.mitch.network.RouteTable;
 import gg.gaylord.mitch.network.RouteTableEntry;
@@ -39,6 +40,7 @@ public class UIManager {
     RouteTable routeTable;
     ForwardingTable forwardingTable = new ForwardingTable();
     NetworkDistancePair networkDistancePair;
+    LRPDaemon lrpDaemon;
 
     ArrayAdapter<AdjacencyTableEntry> adjacencyAdapter;
     ArrayAdapter<RouteTableEntry> routeAdapter;
@@ -111,17 +113,17 @@ public class UIManager {
         layer2Daemon = factory.getLl2Daemon();
         routeTable = factory.getRouteTable();
         networkDistancePair = factory.getNetworkDistancePair();
+        lrpDaemon = factory.getLrpDaemon();
 
         /* Creates all screen widgets */
         createWidgets();
 
         listToDisplay();
 
-        testRouteAndForwardTables();
-
+        //testRouteAndForwardTables();
     }
 
-    private void testRouteAndForwardTables(){
+    /*private void testRouteAndForwardTables(){
         NetworkDistancePair networkDistancePair1 = new NetworkDistancePair(01, 3);
         routeTable.addEntry(03, networkDistancePair1, 1, 03);
         forwardingTable.addFibEntry(new RouteTableEntry(03, networkDistancePair1, 1, 03));
@@ -132,29 +134,33 @@ public class UIManager {
         forwardingTable.addFibEntry(new RouteTableEntry(03, networkDistancePair2, 1, 01));
         forwardingTable.addRouteList((ArrayList<RouteTableEntry>) routeTable.getRouteList());
 
-        routeTableToDisplay();
-        forwardingTableToDisplay();
-
-        /*forwardingTable.removeEntry(networkDistancePair1.getNetworkNumber(), 03);
+        *//*forwardingTable.removeEntry(networkDistancePair1.getNetworkNumber(), 03);
         forwardingTable.removeEntry(networkDistancePair2.getNetworkNumber(), 03);
         routeTable.removeEntry(networkDistancePair1.getNetworkNumber(), 03);
-        routeTable.removeEntry(networkDistancePair2.getNetworkNumber(), 03);*/
+        routeTable.removeEntry(networkDistancePair2.getNetworkNumber(), 03);*//*
 
-        /*try {
-            Thread.sleep((long) 12000);
+        *//*try {
+            Thread.sleep((long) 6000);
         } catch(InterruptedException e){
             e.printStackTrace();
         }
-
-        routeTable.removeOldRoutes();
-        forwardingTable.removeOldRoutes();
+        routeTableToDisplay();
+        forwardingTableToDisplay();
 
         try {
             Thread.sleep((long) 500);
         } catch(InterruptedException e){
             e.printStackTrace();
-        }*/
-    }
+        }*//*
+
+        *//*routeTable.removeOldRoutes();
+        forwardingTable.removeOldRoutes();*//*
+
+        routeTableToDisplay();
+        forwardingTableToDisplay();
+
+
+    }*/
 
     private AdapterView.OnItemClickListener sendToLL2P = new AdapterView.OnItemClickListener(){
         @Override
@@ -221,7 +227,7 @@ public class UIManager {
 
     };
 
-    private void resetAdjacencyListAdapter(){
+    public void resetAdjacencyListAdapter(){
         adjacencyList = layer1Daemon.getAdjacencyList();
         adjacencyAdapter.clear();
         Iterator<AdjacencyTableEntry> listIterator = adjacencyList.iterator();
@@ -230,8 +236,8 @@ public class UIManager {
         }
     }
 
-    private void resetRouteTableListAdapter(){
-        routeTableList = routeTable.getRouteList();
+    public void resetRouteTableListAdapter(){
+        routeTableList = lrpDaemon.getRoutingTableAsList();
         routeAdapter.clear();
         Iterator<RouteTableEntry> listIterator = routeTableList.iterator();
         while(listIterator.hasNext()){
@@ -240,7 +246,7 @@ public class UIManager {
     }
 
     private void resetForwardingListAdapter(){
-        forwardingTableList = forwardingTable.getForwardingList();
+        forwardingTableList = lrpDaemon.getForwardingTableAsList();
         forwardingAdapter.clear();
         Iterator<RouteTableEntry> listIterator = forwardingTableList.iterator();
         while(listIterator.hasNext()){
@@ -272,7 +278,7 @@ public class UIManager {
     }
 
     public void routeTableToDisplay(){
-        routeTableList = routeTable.getRouteList();
+        routeTableList = lrpDaemon.getRoutingTableAsList();
 
         routeAdapter = new ArrayAdapter<RouteTableEntry>(parentActivity, android.R.layout.simple_list_item_1, routeTableList);
 
@@ -282,7 +288,7 @@ public class UIManager {
     }
 
     public void forwardingTableToDisplay(){
-        forwardingTableList = forwardingTable.getForwardingList();
+        forwardingTableList = lrpDaemon.getForwardingTableAsList();
 
         forwardingAdapter = new ArrayAdapter<RouteTableEntry>(parentActivity, android.R.layout.simple_list_item_1, forwardingTableList);
 

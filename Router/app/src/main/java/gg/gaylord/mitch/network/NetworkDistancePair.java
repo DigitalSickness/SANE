@@ -39,7 +39,7 @@ public class NetworkDistancePair {
     }
 
     public String toString(){
-        return new String(Utilities.padHexString(Integer.toHexString(networkNumber), 2) +
-                Utilities.padHexString(Integer.toHexString(distance), 3));
+        return new String(Utilities.padHexString(Integer.toHexString(networkNumber), NetworkConstants.NETWORK_NUMBER_LENGTH) +
+                Utilities.padHexString(Integer.toHexString(distance), NetworkConstants.NETWORK_DISTANCE_LENGTH));
     }
 }

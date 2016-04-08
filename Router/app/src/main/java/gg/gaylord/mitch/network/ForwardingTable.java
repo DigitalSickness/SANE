@@ -21,6 +21,7 @@ public class ForwardingTable extends RouteTable{
         Iterator<RouteTableEntry> routeTableEntryIterator = forwardingTable.iterator();
         RouteTableEntry tmp = null;
         boolean found = false;
+        boolean resetIterator = false;
 
         while(routeTableEntryIterator.hasNext()){
             tmp = routeTableEntryIterator.next();
@@ -31,6 +32,12 @@ public class ForwardingTable extends RouteTable{
                 forwardingTable.remove(tmp);
                 forwardingTable.add(entry);
                 found = true;
+                resetIterator = true;
+            }
+
+            if (resetIterator){
+                routeTableEntryIterator = getTable().iterator();
+                resetIterator = false;
             }
         }
 
@@ -41,7 +48,7 @@ public class ForwardingTable extends RouteTable{
         return tmp;
     }
 
-    public void addRouteList(ArrayList<RouteTableEntry> routeList){
+    public void addRouteList(List<RouteTableEntry> routeList){
 
         for (int i = 0; i < routeList.size(); i++){
             addFibEntry(routeList.get(i));

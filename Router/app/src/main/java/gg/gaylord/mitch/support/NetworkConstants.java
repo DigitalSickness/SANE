@@ -39,6 +39,16 @@ public class NetworkConstants {
     public static final String LL2P_ARP_REPLY = "8007";
     public static final String MY_LL3P_ADDRESS = "0901";
 
+    public static final int LL3P_ADDRESS_LENGTH = 4;
+    public static final int SEQUENCE_NUMBER_LENGTH = 1;
+    public static final int ROUTE_COUNT_LENGTH = 1;
+
+    public static final int NETWORK_NUMBER_LENGTH = 2;
+    public static final int NETWORK_DISTANCE_LENGTH = 2;
+
+    public static final int ROUTER_BOOT_TIME = 10;
+    public static final int ROUTE_UPDATE_VALUE = 3 * ROUTER_BOOT_TIME;
+
     public NetworkConstants (Activity parentActivity){
         //IP_ADDRESS = this.getIPAddress(true);
         IP_ADDRESS = getLocalIpAddress(); // call the local method to get the IP address of this device.

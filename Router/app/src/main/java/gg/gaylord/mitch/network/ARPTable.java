@@ -115,7 +115,7 @@ public class ARPTable implements Runnable{
         return found;
     }
 
-    public boolean ll23IsInTable (Integer ll3p){
+    public boolean ll3pIsInTable (Integer ll3p){
         boolean found = false;
         Iterator<ARPTableEntry> find = arpTable.iterator();
         ARPTableEntry tmp = null;

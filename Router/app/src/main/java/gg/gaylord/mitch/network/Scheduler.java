@@ -4,6 +4,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import gg.gaylord.mitch.support.Factory;
+import gg.gaylord.mitch.support.NetworkConstants;
 import gg.gaylord.mitch.support.UIManager;
 
 /**
@@ -13,6 +14,8 @@ public class Scheduler {
 
     ScheduledThreadPoolExecutor threadPoolManager;
     ARPTable arpTable;
+    LRPDaemon lrpDaemon;
+    RouteTable routeTable;
 
 
     public Scheduler() {
@@ -21,9 +24,12 @@ public class Scheduler {
 
     public void getObjectReferences(Factory factory){
         arpTable = factory.getArpTableObject();
-
+        lrpDaemon = factory.getLrpDaemon();
+        routeTable = factory.getRouteTable();
 
         threadPoolManager.scheduleAtFixedRate(arpTable, 10, 80, TimeUnit.SECONDS);
+        //threadPoolManager.scheduleAtFixedRate(routeTable, NetworkConstants.ROUTER_BOOT_TIME, NetworkConstants.ROUTE_UPDATE_VALUE, TimeUnit.SECONDS);
+        //threadPoolManager.scheduleAtFixedRate(lrpDaemon, NetworkConstants.ROUTER_BOOT_TIME, NetworkConstants.ROUTE_UPDATE_VALUE, TimeUnit.SECONDS);
 
     }
 

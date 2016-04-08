@@ -9,6 +9,7 @@ import gg.gaylord.mitch.network.ForwardingTable;
 import gg.gaylord.mitch.network.LL1Daemon;
 import gg.gaylord.mitch.network.LL2Daemon;
 import gg.gaylord.mitch.network.LL2P;
+import gg.gaylord.mitch.network.LRPDaemon;
 import gg.gaylord.mitch.network.NetworkDistancePair;
 import gg.gaylord.mitch.network.RouteTable;
 import gg.gaylord.mitch.network.RouteTableEntry;
@@ -32,6 +33,8 @@ public class Factory {
     NetworkDistancePair networkDistancePair;
     RouteTable routeTable;
     RouteTableEntry routeTableEntry;
+    ForwardingTable forwardingTable;
+    LRPDaemon lrpDaemon;
 
     public Factory (Activity activity){
         parentActivity = activity;
@@ -53,6 +56,9 @@ public class Factory {
         networkDistancePair = new NetworkDistancePair();
         routeTable = new RouteTable();
         routeTableEntry = new RouteTableEntry();
+        forwardingTable = new ForwardingTable();
+
+        lrpDaemon = new LRPDaemon();
     }
 
     private void getAllObjectReferences(){
@@ -63,7 +69,11 @@ public class Factory {
         arpDaemon.getObjectReferences(this);
         routeTableEntry.getObjectReferences(this);
         routeTable.getObjectReferences(this);
+        forwardingTable.getObjectReferences(this);
+        lrpDaemon.getObjectReferences(this);
     }
+
+    public LRPDaemon getLrpDaemon() {return lrpDaemon; }
 
     public Activity getParentActivity(){
         return parentActivity;
@@ -90,5 +100,7 @@ public class Factory {
     public RouteTableEntry getRouteTableEntry() { return routeTableEntry; }
 
     public RouteTable getRouteTable() { return routeTable; }
+
+    public ForwardingTable getForwardingTable() { return forwardingTable; }
 
 }

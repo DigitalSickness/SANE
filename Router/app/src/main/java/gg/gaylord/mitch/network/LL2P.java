@@ -5,6 +5,7 @@ import android.net.Network;
 import gg.gaylord.mitch.support.Factory;
 import gg.gaylord.mitch.support.NetworkConstants;
 import gg.gaylord.mitch.support.UIManager;
+import gg.gaylord.mitch.support.Utilities;
 
 /**
  * Created by mitchell.gaylord on 1/28/2016.
@@ -21,8 +22,8 @@ public class LL2P {
     public LL2P (String _destAddress, String _srcAddress, String type, String _payload){
         destAddress = Integer.parseInt(_destAddress, 16);
         srcAddress = Integer.parseInt(_srcAddress,16);
-        payload = _payload.getBytes();
-        typeField = Integer.parseInt(type,16);
+        payload = Utilities.stringToByte(_payload);
+        typeField = Integer.parseInt(type, 16);
         CRC = new CRC16();
         calculateCRC();
     }
@@ -57,7 +58,7 @@ public class LL2P {
     }
 
     public void setPayload(String pay){
-        payload = pay.getBytes();
+        payload = Utilities.stringToByte(pay);
     }
 
     public void setTypeField(String type){

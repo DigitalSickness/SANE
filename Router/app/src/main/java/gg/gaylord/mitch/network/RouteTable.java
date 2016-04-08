@@ -1,6 +1,7 @@
 package gg.gaylord.mitch.network;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +15,7 @@ import gg.gaylord.mitch.support.UIManager;
 /**
  * Created by mitchell.gaylord on 3/3/2016.
  */
-public class RouteTable {
+public class RouteTable implements Runnable {
 
     Set<RouteTableEntry> routeTable;
     UIManager uiManager;
@@ -91,5 +92,20 @@ public class RouteTable {
         }
 
         return tmp;
+    }
+
+    @Override
+    public void run(){
+
+        this.removeOldRoutes();
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                uiManager.resetAdjacencyListAdapter();
+                uiManager.raiseToast("Checked Routes", Toast.LENGTH_SHORT);
+            }
+        });
+
     }
 }

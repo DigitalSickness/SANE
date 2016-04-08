@@ -3,6 +3,8 @@ package gg.gaylord.mitch.support;
 /**
  * Created by mitchell.gaylord on 1/21/2016.
  */
+import android.util.Base64;
+
 import java.util.Calendar;
 
 public class Utilities {
@@ -45,5 +47,13 @@ public class Utilities {
         }
 
         return temp;
+    }
+
+    public static String byteToString(byte[] bytes){
+        return new String(Base64.decode(bytes, Base64.DEFAULT));
+    }
+
+    public static byte[] stringToByte(String string){
+        return Base64.encode(string.getBytes(), Base64.DEFAULT);
     }
 }

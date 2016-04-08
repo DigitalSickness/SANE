@@ -18,6 +18,7 @@ public class LL2Daemon {
     Integer localLL2P;
     UIManager uiManager;
     ARPDaemon arpDaemon;
+    LRPDaemon lrpDaemon;
 
     public LL2Daemon(){
         ll2pObject = new LL2P();
@@ -28,6 +29,7 @@ public class LL2Daemon {
         ll2pObject = factory.getLL2PObject();
         layer1Daemon = factory.getLl1Daemon();
         arpDaemon = factory.getArpDaemon();
+        lrpDaemon = factory.getLrpDaemon();
     }
 
     public void setLocalLL2PAddress(Integer ll2p){
@@ -100,6 +102,7 @@ public class LL2Daemon {
             if (tempType.compareTo(NetworkConstants.LRP_TYPE)==0){
                 //send to the LRP when it exists
                 uiManager.raiseToast("LRP Update Arrived");
+                lrpDaemon.receiveNewLRP(frame.getPayloadBytes(), Integer.parseInt(frame.getSrcAddressHexString(),16));
             }
 
             if (tempType.compareTo(NetworkConstants.LL2P_ECHO_REQUEST_TYPE)==0){

@@ -67,15 +67,25 @@ public class RouteTableEntry implements Comparable<RouteTableEntry> {
 
     public int compareTo(RouteTableEntry route){
 
-        return this.pair.getNetworkNumber().compareTo(route.getNetworkDistancePair().getNetworkNumber());
+        if (this.pair.getNetworkNumber().compareTo(route.getNetworkDistancePair().getNetworkNumber())==0) {
+            if (this.pair.getDistance().compareTo(route.getNetworkDistancePair().getDistance()) == 0) {
+                return this.getSourceLL3P().compareTo(route.getSourceLL3P());
+            } else {
+                return this.pair.getDistance().compareTo(route.getNetworkDistancePair().getDistance());
+            }
+        }
+        else{
+            return this.pair.getNetworkNumber().compareTo(route.getNetworkDistancePair().getNetworkNumber());
+        }
+
     }
 
     public void updateLastTimeTouched(){
         lastTimeTouched = (int) Calendar.getInstance().getTimeInMillis()/1000;
     }
 
-    public int getCurrentAgeInSeconds(){
-        int tempTime = (int) Calendar.getInstance().getTimeInMillis()/1000;
+    public long getCurrentAgeInSeconds(){
+        long tempTime =  Calendar.getInstance().getTimeInMillis()/1000;
 
         return tempTime - lastTimeTouched;
     }
@@ -87,7 +97,7 @@ public class RouteTableEntry implements Comparable<RouteTableEntry> {
     }
 
     public boolean isNotExpired(){
-        if (this.getCurrentAgeInSeconds() > 10){
+        if (getCurrentAgeInSeconds() > 5){
             return true;
         } else {
             return false;
